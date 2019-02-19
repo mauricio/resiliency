@@ -1,0 +1,350 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Building resilient apps to provide reliable services</title>
+
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/black.css">
+
+	<!-- Theme used for syntax highlighting of code -->
+	<link rel="stylesheet" href="lib/css/zenburn.css">
+
+	<!-- Printing and PDF exports -->
+	<script>
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match(/print-pdf/gi) ? 'css/print/pdf.css' : 'css/print/paper.css';
+      document.getElementsByTagName('head')[0].appendChild(link);
+	</script>
+
+	<style>
+		.red {
+			color: red;
+		}
+
+		.blue {
+			color: #1b91ff;
+		}
+
+		.green {
+			color: #c1ff0b;
+		}
+
+		.orange {
+			color: orange;
+		}
+
+		.gray {
+			color: #3f3f3f;
+		}
+
+		.yellow {
+			color: #F4FF77;
+		}
+
+		.black {
+			color: black;
+		}
+
+		.shadowed {
+			text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+		}
+	</style>
+
+</head>
+<body>
+<div class="reveal">
+	<div class="slides">
+
+		<section>
+			<h1 class="shadowed">
+				Building <span class="red">resilient</span> apps to provide <span class="green">reliable</span> services
+			</h1>
+			<p class="shadowed">
+				<small>
+					<a href="http://mauricio.github.io/">Maurício Linhares</a> /
+					<a href="http://twitter.com/mauriciojr">@mauriciojr</a> /
+					<span class="shadowed">Software Engineer at DigitalOcean</span>
+				</small>
+			</p>
+		</section>
+
+		<section>
+			<h1>Resiliency</h1>
+			<ul>
+				<li>the capacity to recover <span class="green">quickly</span> from difficulties</li>
+				<li>the ability of a substance or object to <span class="orange">spring back</span> into shape</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Resilient <span class="green">applications</span></h1>
+			<ul>
+				<li>Withstand stress and rebound without direct <span class="yellow">human intervention</span></li>
+				<li>Recover from <span class="blue">temporary</span> failures and continue to serve traffic</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>What can we do to build <span class="yellow">resilient</span> apps?</h1>
+		</section>
+
+		<section>
+			<h1><span class="orange">Integration</span> points</h1>
+			<p>Always expect the <span class="red">worst</span>, be cynical</p>
+		</section>
+
+		<section>
+			<h1>Don't fail on <span class="blue">startup</span></h1>
+			<p>
+				Your app should not require access to an <span class="orange">integration</span> to start, it might fail
+				but it should be up.
+			</p>
+		</section>
+
+		<section>
+			<h1>The circular dependency <span class="red">conundrum</span></h1>
+			<p>I can't start because you're not up, you can't start because I'm not up</p>
+		</section>
+
+		<section>
+			<h1>Don't use integrations on <span class="green">health checks</span></h1>
+			<p>
+				Your app's health check calls an integration? <span class="red">BAD</span>.
+			</p>
+		</section>
+
+		<section>
+			<h1>Automate everything <span class="green">carefully</span></h1>
+			<p>Automation that fails or is out of sync is more dangerous than no automation at all</p>
+		</section>
+
+		<section>
+			<h1>Terminate stuff <span class="blue">slowly</span></h1>
+			<p>You don't want to be <span class="red">aggressive</span> here</p>
+		</section>
+
+		<section>
+			<h1>Consider <span class="orange">startup time</span> when scaling up</h1>
+			<p>
+				Autoscaling from 10 to 100 only because you failed to account for that
+				will <span class="red">take you down</span>.
+			</p>
+		</section>
+
+		<section>
+			<h1><span class="green">Limit</span> resource automated resource usage</h1>
+			<p>
+				Any piece that creates new resources based on metrics or load needs <span class="red">hard limits</span>.
+				Your billing and downstream dependencies will thank you.
+			</p>
+		</section>
+
+		<section>
+			<h1>Huge state changes are a <span class="red">bad sign</span></h1>
+			<p>
+				Automation <span class="green">should not</span> try to automatically recover if the change is too
+				large.
+			</p>
+		</section>
+
+		<section>
+			<h1>Got a <span class="green">CDN</span>?</h1>
+			<p>
+				<span class="red">Block</span> direct access to resources the CDN is caching.
+			</p>
+		</section>
+
+		<section>
+			<h1>Find your <span class="red">most expensive</span> operation</h1>
+			<p>
+				What happens if you <span class="green">flood it</span>?
+			</p>
+		</section>
+
+		<section>
+			<h1>Timeout <span class="red">everything</span></h1>
+			<p>
+				No external call is <span>safe</span> enough, all operations should have a (preferably small) timeout
+				tied to it.
+			</p>
+		</section>
+
+		<section>
+			<h1>Use proxies if you don't have direct access</h1>
+			<ul>
+				<li>Envoy</li>
+				<li>Linkerd</li>
+				<li>ProxySQL</li>
+				<li>PGBouncer</li>
+				<li>HAproxy</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1><span class="green">Circuit breakers</span> are your friends</h1>
+			<p>
+				Wait, <span class="red">what's</span> a circuit breaker?
+			</p>
+		</section>
+
+		<section>
+			<h1>Too much <span class="red">failure</span>? Trip it!</h1>
+			<ul>
+				<li>
+					Once a dependency has failed <span class="orange">too much</span>, the circuit <span class="yellow">opens</span>
+					and
+					stops sending requests
+				</li>
+				<li>
+					Failure mode should be <span class="blue">optional</span>, could be a cached or default response or
+					just a special error
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Recovering</h1>
+			<ul>
+				<li>
+					Every once in a while a request is sent to the <span class="yellow">downstream service</span>
+				</li>
+				<li>
+					If enough requests succeed, the circuit closes and the app <span class="green">resumes</span>
+					calling the dependency.
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Why bother?</h1>
+			<ul>
+				<li>Protects <span class="green">downstream services</span> from overload</li>
+				<li>Forces callers to think about <span class="red">failure modes</span></li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Failure modes are a <span class="red">business</span> decision</h1>
+			<p>
+				<span class="orange">Stuff breaks</span>, deal with it.
+			</p>
+		</section>
+
+		<section>
+			<h1>Use bulkheads</h1>
+			<ul>
+				<li>
+					Create <span class="red">separate deployments</span> across regions, data centers and even cloud
+					providers
+				</li>
+				<li>
+					Detect <span class="green">high cost users</span> (the ones that pay your bills!) and separate them
+					from the
+					common ones.
+				</li>
+				<li>
+					Use different endpoints for callers with <span class="blue">different expectations</span>.
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Fail <span class="red">fast</span></h1>
+			<ul>
+				<li>The more users wait, the more likely they are to leave or be mad</li>
+				<li>Any transaction that takes more than a couple seconds is a failure already</li>
+				<li>Run long running processes in <span class="blue">background</span> and provide feedback later</li>
+				<li>Failures modes are <span class="green">business decisions</span></li>
+			</ul>
+		</section>
+
+		<section>
+			<h1><span class="red">Rate limit</span> internal services</h1>
+			<ul>
+				<li>Your service can't take <span class="blue">infinite load</span></li>
+				<li>A <span class="orange">misconfigured upstream service</span> could flood you with traffic and take
+					you down
+				</li>
+				<li>Create a <span class="green">well defined limit</span> on how many calls each service can make and
+					throttle them once they go
+					over it
+				</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Test for <span class="red">broken protocols</span></h1>
+			<ul>
+				<li>Half a message</li>
+				<li><span class="green">Garbage</span></li>
+				<li>Unexpected content type</li>
+				<li>Use your <span class="blue">imagination</span></li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Resiliency is not <span class="red">free</span></h1>
+			<p>
+				But <span class="green">outages</span> aren't free either. Find the balance.
+			</p>
+		</section>
+
+		<section>
+			<h1><span class="green">Questions?</span></h1>
+		</section>
+
+		<section>
+			<h1>
+				Thanks!
+			</h1>
+			<ul>
+				<li>
+					<a href="https://pragprog.com/book/mnee2/release-it-second-edition">
+						Release It! Design and Deploy Production-Ready Software - Michael Nygard
+					</a>
+				</li>
+				<li>
+					<a href="https://samnewman.io/books/building_microservices/">
+						Building Microservices - Designing fine grained systems - Sam Newman
+					</a>
+				</li>
+				<li>
+					<a href="http://shop.oreilly.com/product/0636920072768.do">
+						Designing distributed systems - Patterns and paradigms for Scalable, Reliable Services - Brendam
+						Burns
+					</a>
+				</li>
+			</ul>
+		</section>
+
+	</div>
+
+</div>
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<script>
+  // More info about config & dependencies:
+  // - https://github.com/hakimel/reveal.js#configuration
+  // - https://github.com/hakimel/reveal.js#dependencies
+  Reveal.initialize({
+    dependencies: [
+      {src: 'plugin/markdown/marked.js'},
+      {src: 'plugin/markdown/markdown.js'},
+      {src: 'plugin/notes/notes.js', async: true},
+      {
+        src: 'plugin/highlight/highlight.js', async: true, callback: function () {
+          hljs.initHighlightingOnLoad();
+        }
+      }
+    ]
+  });
+</script>
+</body>
+</html>
