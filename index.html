@@ -264,6 +264,15 @@
 		</section>
 
 		<section>
+			<h1>Do not <span class="red">retry</span> right away</h1>
+			<ul>
+				<li>If it failed now, it will <span class="yellow">fail again</span> a coulpe seconds later</li>
+				<li>Use <span class="orange">backoff</span> and run in the background</li>
+				<li>Notify the user <span class="green" >later</span> if impossible to perform</li>
+			</ul>
+		</section>
+
+		<section>
 			<h1><span class="red">Rate limit</span> internal services</h1>
 			<ul>
 				<li>Your service can't take <span class="blue">infinite load</span></li>
