@@ -4,9 +4,10 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-	<title>Building resilient apps to provide reliable services</title>
+    <title>Construindo aplicações resilientes pra prover serviços confiáveis</title>
 
-	<link rel="stylesheet" href="css/reveal.css">
+
+    <link rel="stylesheet" href="css/reveal.css">
 	<link rel="stylesheet" href="css/theme/black.css">
 
 	<!-- Theme used for syntax highlighting of code -->
@@ -60,122 +61,131 @@
 <div class="reveal">
 	<div class="slides">
 
+        <section>
+            <h1 class="shadowed">
+                Construindo aplicações <span class="red">resilientes</span> pra prover serviços <span class="green">confiáveis</span>
+            </h1>
+            <p class="shadowed">
+                <small>
+                    <a href="http://mauricio.github.io/">Maurício Linhares</a> /
+                    <a href="http://twitter.com/mauriciojr">@mauriciojr</a> /
+                    <span class="shadowed">Tech Lead na DigitalOcean/Co-host do podcast <a href="http://hipsters.tech/">hipsters.tech</a></span>
+                </small>
+            </p>
+        </section>
+
+        <section>
+            <h1>Resiliência</h1>
+            <ul>
+                <li>a capacidade de se recuperar <span class="green">rapidademente</span> de dificuldades</li>
+                <li>a capacidade de uma substânicia ou objeto de <span class="orange">retornar</span> a sua forma original</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>Aplicações <span class="green">resilientes</span></h1>
+            <ul>
+                <li>Aguentam o stress e voltam ao normal sem <span class="yellow">intervenção humana</span></li>
+                <li>Se recuperam de falhas <span class="blue">temporárias</span> e continuam a servir tráfego</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>O que podemos fazer pra construir aplicações <span class="yellow">resilientes</span>?</h1>
+        </section>
+
+        <section>
+            <h1>Pontos de <span class="orange">integração</span></h1>
+            <p>Sempre espere o <span class="red">pior</span>, seja cínico</p>
+        </section>
+
 		<section>
-			<h1 class="shadowed">
-				Building <span class="red">resilient</span> apps to provide <span class="green">reliable</span> services
-			</h1>
-			<p class="shadowed">
-				<small>
-					<a href="http://mauricio.github.io/">Maurício Linhares</a> /
-					<a href="http://twitter.com/mauriciojr">@mauriciojr</a> /
-					<span class="shadowed">Software Engineer at DigitalOcean</span>
-				</small>
-			</p>
+			<h1>Boeing <span class="orange">737 MAX</span></h1>
 		</section>
 
 		<section>
-			<h1>Resiliency</h1>
-			<ul>
-				<li>the capacity to recover <span class="green">quickly</span> from difficulties</li>
-				<li>the ability of a substance or object to <span class="orange">spring back</span> into shape</li>
-			</ul>
-		</section>
-
-		<section>
-			<h1>Resilient <span class="green">applications</span></h1>
-			<ul>
-				<li>Withstand stress and rebound without direct <span class="yellow">human intervention</span></li>
-				<li>Recover from <span class="blue">temporary</span> failures and continue to serve traffic</li>
-			</ul>
-		</section>
-
-		<section>
-			<h1>What can we do to build <span class="yellow">resilient</span> apps?</h1>
-		</section>
-
-		<section>
-			<h1><span class="orange">Integration</span> points</h1>
-			<p>Always expect the <span class="red">worst</span>, be cynical</p>
-		</section>
-
-		<section>
-			<h1>Don't fail on <span class="blue">startup</span></h1>
+			<h1>Não falhe ao  <span class="blue">iniciar</span></h1>
 			<p>
-				Your app should not require access to an <span class="orange">integration</span> to start, it might fail
-				but it should be up.
+				Sua aplicação não deve exigir acesso a uma <span class="orange">integração</span> para iniciar, ela pode não funcionar completamente mas deve sempre subir.
 			</p>
 		</section>
 
 		<section>
-			<h1>The circular dependency <span class="red">conundrum</span></h1>
-			<p>I can't start because you're not up, you can't start because I'm not up</p>
+			<h1>O <span class="red">mistério</span> da dependência circular</h1>
+			<p>Eu não posso começar porque você não começou, você não pode começar porque eu não comecei</p>
 		</section>
 
 		<section>
-			<h1>Don't use integrations on <span class="green">health checks</span></h1>
+			<h1>Não use integrações em <span class="green">health checks</span></h1>
 			<p>
-				Your app's health check calls an integration? <span class="red">BAD</span>.
+				O health check da sua aplicação chama uma integração? <span class="red">ERRADO</span>.
 			</p>
 		</section>
 
 		<section>
-			<h1>Automate everything <span class="green">carefully</span></h1>
-			<p>Automation that fails or is out of sync is more dangerous than no automation at all</p>
+			<h1>Automatize tudo <span class="green">cuidadosamente</span></h1>
+            <p>Automações que falham ou se desconectam do estado real são muito mais perigosas do que não ter automação nenhuma</p>
 		</section>
 
-		<section>
-			<h1>Terminate stuff <span class="blue">slowly</span></h1>
-			<p>You don't want to be <span class="red">aggressive</span> here</p>
-		</section>
+        <section>
+            <h1>Reddit e Zookeeper <span class="orange">vão passear</span> em 2016</h1>
+            <ul>
+                <li>Autoscaler é desligado</li>
+                <li>ZK começa a ser migrado</li>
+                <li>Autoscaler sobe outra vez por acidente</li>
+                <li>Tiro, porrada e bomba</li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>Mate infra estrutura <span class="blue">lentamente</span></h1>
+            <p>Você não quer ser <span class="red">agressivo</span> aqui</p>
+        </section>
 
 		<section>
-			<h1>Consider <span class="orange">startup time</span> when scaling up</h1>
+			<h1>Considere o <span class="orange">tempo de inicialização</span> quando estiver fazendo scale ups</h1>
 			<p>
-				Autoscaling from 10 to 100 only because you failed to account for that
-				will <span class="red">take you down</span>.
+                Autoscaling de 10 pra 100 máquinas porque você esqueceu de contar o tempo de inicialização vai <span class="red">derrubar o seu serviço</span>.
 			</p>
 		</section>
 
 		<section>
-			<h1><span class="green">Limit</span> resource automated resource usage</h1>
+			<h1><span class="green">Limite</span> a criação automática de infra estrutura</h1>
 			<p>
-				Any piece that creates new resources based on metrics or load needs <span class="red">hard limits</span>.
-				Your billing and downstream dependencies will thank you.
+                Qualquer software que cria novos recursos baseados em métricas e tráfego precisam de <span class="red">limites bem definidos</span>.
+				Sua conta bancária e os serviços que você chama vão agradecer.
 			</p>
 		</section>
 
+        <section>
+            <h1>Mudanças bruscas são <span class="red">um mau sinal</span></h1>
+            <p>
+                Automação deve simplesmente parar e pedir intervenção humana antes de tentar causar uma mudança <span class="green">muito grave</span> no sistema.</p>
+        </section>
+
 		<section>
-			<h1>Huge state changes are a <span class="red">bad sign</span></h1>
+			<h1>Tem uma <span class="green">CDN</span>?</h1>
 			<p>
-				Automation <span class="green">should not</span> try to automatically recover if the change is too
-				large.
+				<span class="red">Bloqueie</span> acesso direto a todos os recursos que a CDN está servindo.
 			</p>
 		</section>
 
+        <section>
+            <h1>Encontre a sua operação <span class="red">mais cara</span></h1>
+            <p>
+                O que acontece se você <span class="green">spammar ela</span>?
+            </p>
+        </section>
+
 		<section>
-			<h1>Got a <span class="green">CDN</span>?</h1>
+			<h1>Timeouts <span class="red">em todos os lugares</span></h1>
 			<p>
-				<span class="red">Block</span> direct access to resources the CDN is caching.
+                Nenhuma chamada é <span class="green">confiável</span> o suficiente, todas as operações devem ter um timeout (preferencialmente curto) associado a ela.
 			</p>
 		</section>
 
 		<section>
-			<h1>Find your <span class="red">most expensive</span> operation</h1>
-			<p>
-				What happens if you <span class="green">flood it</span>?
-			</p>
-		</section>
-
-		<section>
-			<h1>Timeout <span class="red">everything</span></h1>
-			<p>
-				No external call is <span>safe</span> enough, all operations should have a (preferably small) timeout
-				tied to it.
-			</p>
-		</section>
-
-		<section>
-			<h1>Use proxies if you don't have direct access</h1>
+			<h1>Use proxies se você não controla o sistema que precisa ser melhorado</h1>
 			<ul>
 				<li>Envoy</li>
 				<li>Linkerd</li>
@@ -186,130 +196,129 @@
 		</section>
 
 		<section>
-			<h1><span class="green">Circuit breakers</span> are your friends</h1>
+			<h1><span class="green">Circuit breakers</span> são seus amigos</h1>
 			<p>
-				Wait, <span class="red">what's</span> a circuit breaker?
+				Espera, <span class="red">o que é</span> um circuit breaker (ou disjuntor)?
 			</p>
 		</section>
 
 		<section>
-			<h1>Too much <span class="red">failure</span>? Trip it!</h1>
+			<h1>Muitos <span class="red">erros</span>? Desame ele!</h1>
 			<ul>
 				<li>
-					Once a dependency has failed <span class="orange">too much</span>, the circuit <span class="yellow">opens</span>
-					and
-					stops sending requests
+
+					Assim que uma dependência <span class="orange">falhou demais</span>, o circuito <span class="yellow">abre</span>
+					e pára de mandar requisições
 				</li>
 				<li>
-					Failure mode should be <span class="blue">optional</span>, could be a cached or default response or
-					just a special error
+                    Você pode ter uma <span class="blue">reposta padrão</span> pra casos de falha, dados de um cache ou uma resposta vazia.
+				</li>
+			</ul>
+		</section>
+
+        <section>
+            <h1>Recuperação</h1>
+            <ul>
+                <li>
+                    De vez em quando uma requisição deve passar <span class="yellow">pro serviço com problemas</span>
+                </li>
+                <li>
+                    Assim que um número suficiente de requisições <span class="green">tiver sucesso</span>
+                    você pode voltar a chamar a dependência.
+                </li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>Por que perder tempo com isso?</h1>
+            <ul>
+                <li>Protege <span class="green">os serviços que você chama</span> de uma sobrecarga de requisições</li>
+                <li>Força quem chama a pensar em <span class="red">modos de falha</span></li>
+            </ul>
+        </section>
+
+        <section>
+            <h1>Modos de falha são uma <span class="red">decisão de negócio</span></h1>
+            <p>
+                <span class="orange">Tudo quebra</span>, esteja pronto pra lidar com isso.
+            </p>
+        </section>
+
+		<section>
+			<h1>Use divisórias</h1>
+			<ul>
+				<li>
+                    Crie <span class="red">cópias</span> do sistema em regiões, data centers e até mesmo provedores de nuvem diferentes.
+				</li>
+				<li>
+					Descubra quem são seus  <span class="green">usuários mais caros</span> (os que pagam as suas contas!) e separe eles do resto.
+				</li>
+				<li>
+					Use chamadas e destinos diferentes pra clientes com <span class="blue">necessidades diferentes</span>.
 				</li>
 			</ul>
 		</section>
 
 		<section>
-			<h1>Recovering</h1>
+			<h1>Falhe <span class="red">rápido</span></h1>
 			<ul>
 				<li>
-					Every once in a while a request is sent to the <span class="yellow">downstream service</span>
-				</li>
+                    Quanto mais usuários esperam, maiores as chances deles saírem ou se chatearem com o serviço</li>
 				<li>
-					If enough requests succeed, the circuit closes and the app <span class="green">resumes</span>
-					calling the dependency.
+                    Qualquer transação que demore mais do que alguns poucos segundos já falhou do ponto de vista do usuário</li>
+				<li>
+                    Execute processos longos em <span class="blue">background</span> e dê retorno depois</li>
+				<li>Modos de falha são uma <span class="green">decisão de negócio</span></li>
+			</ul>
+		</section>
+
+		<section>
+			<h1>Não <span class="red">tente outra vez</span> rapidamente</h1>
+			<ul>
+				<li>
+                    Se acabou de quebrar, tentar outra vez <span class="yellow">dificilmente</span> vai fazer funcionar
+                    </li>
+				<li>Use <span class="orange">backoffs</span>, execute em background, espere por mais tempo</li>
+				<li>Avise ao usuário <span class="green" >depois</span> se foi impossível completar a operação</li>
+			</ul>
+		</section>
+
+		<section>
+			<h1><span class="red">Rate limit</span> quem chama o seu serviço</h1>
+			<ul>
+				<li>O seu serviço não vai aguentar <span class="blue">tráfego infinito</span></li>
+				<li>Um cliente <span class="orange">problemático</span> poderia inundar você de tráfego e tirar o serviço completamente do ar
+				</li>
+				<li>Crie um <span class="green">limite bem definido</span>
+                    de o quanto cada serviço pode chamar você e negue operações se eles forem além desse limite
 				</li>
 			</ul>
 		</section>
 
 		<section>
-			<h1>Why bother?</h1>
+			<h1>Teste usando <span class="red">erros de protocolo</span></h1>
 			<ul>
-				<li>Protects <span class="green">downstream services</span> from overload</li>
-				<li>Forces callers to think about <span class="red">failure modes</span></li>
+				<li>Meia mensagem</li>
+				<li><span class="green">Lixo</span></li>
+				<li>Conteúdo inesperado</li>
+				<li>Use sua <span class="blue">imaginação</span></li>
 			</ul>
 		</section>
 
 		<section>
-			<h1>Failure modes are a <span class="red">business</span> decision</h1>
+			<h1>Resiliência não é <span class="red">grátis</span></h1>
 			<p>
-				<span class="orange">Stuff breaks</span>, deal with it.
+				Mas <span class="green">desastres</span> também não são. Encontre o seu equilíbrio.
 			</p>
 		</section>
 
 		<section>
-			<h1>Use bulkheads</h1>
-			<ul>
-				<li>
-					Create <span class="red">separate deployments</span> across regions, data centers and even cloud
-					providers
-				</li>
-				<li>
-					Detect <span class="green">high cost users</span> (the ones that pay your bills!) and separate them
-					from the
-					common ones.
-				</li>
-				<li>
-					Use different endpoints for callers with <span class="blue">different expectations</span>.
-				</li>
-			</ul>
-		</section>
-
-		<section>
-			<h1>Fail <span class="red">fast</span></h1>
-			<ul>
-				<li>The more users wait, the more likely they are to leave or be mad</li>
-				<li>Any transaction that takes more than a couple seconds is a failure already</li>
-				<li>Run long running processes in <span class="blue">background</span> and provide feedback later</li>
-				<li>Failures modes are <span class="green">business decisions</span></li>
-			</ul>
-		</section>
-
-		<section>
-			<h1>Do not <span class="red">retry</span> right away</h1>
-			<ul>
-				<li>If it failed now, it will <span class="yellow">fail again</span> a coulpe seconds later</li>
-				<li>Use <span class="orange">backoff</span> and run in the background</li>
-				<li>Notify the user <span class="green" >later</span> if impossible to perform</li>
-			</ul>
-		</section>
-
-		<section>
-			<h1><span class="red">Rate limit</span> internal services</h1>
-			<ul>
-				<li>Your service can't take <span class="blue">infinite load</span></li>
-				<li>A <span class="orange">misconfigured upstream service</span> could flood you with traffic and take
-					you down
-				</li>
-				<li>Create a <span class="green">well defined limit</span> on how many calls each service can make and
-					throttle them once they go
-					over it
-				</li>
-			</ul>
-		</section>
-
-		<section>
-			<h1>Test for <span class="red">broken protocols</span></h1>
-			<ul>
-				<li>Half a message</li>
-				<li><span class="green">Garbage</span></li>
-				<li>Unexpected content type</li>
-				<li>Use your <span class="blue">imagination</span></li>
-			</ul>
-		</section>
-
-		<section>
-			<h1>Resiliency is not <span class="red">free</span></h1>
-			<p>
-				But <span class="green">outages</span> aren't free either. Find the balance.
-			</p>
-		</section>
-
-		<section>
-			<h1><span class="green">Questions?</span></h1>
+			<h1><span class="green">Dúvidas?</span></h1>
 		</section>
 
 		<section>
 			<h1>
-				Thanks!
+				Obrigado!
 			</h1>
 			<ul>
 				<li>
